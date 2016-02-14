@@ -29,11 +29,13 @@ RUN useradd -m -s /bin/bash -u 1000 -m phant
 #RUN sed -i -e "s/;daemonize\s*=\s*yes/daemonize = no/g" /etc/php5/php-fpm.conf
 RUN sed -i -e "s/;date\.timezone =.*/date.timezone = Europe\/Zurich/g" /etc/php5/php.ini
 RUN sed -i -e "s/;date\.timezone =.*/date.timezone = Europe\/Zurich/g" /etc/php5/php.ini
-RUN echo "zend_extension=/usr/local/lib/php/extensions/no-debug-non-zts-20100525/opcache.so" >> /etc/php5/php.ini
+RUN echo "zend_extension=/usr/local/lib/php/extensions/no-debug-non-zts-20090626/opcache.so" >> /etc/php5/php.ini
 #RUN sed -i -e "s/user = nobody/user = user1000/g" /etc/php5/php-fpm.conf
 #RUN sed -i -e "s/group = nobody/group = user1000/g" /etc/php5/php-fpm.conf
 RUN rm /etc/apache2/sites-enabled/000-default.conf
-RUN a2enmod rewrite
+#RUN echo "LoadModule php5_module        /usr/lib/apache2/modules/libphp5.so" >> /etc/apache2/mods-available/php5.load
+
+RUN a2enmod rewrite && a2enmod php5
 
 CMD ["/sbin/my_init"]
 
